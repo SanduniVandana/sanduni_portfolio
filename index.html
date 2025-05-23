@@ -701,20 +701,12 @@
             <span class="btn-text">Send Message</span>
             <i class="fas fa-paper-plane"></i>
           </button>
+          <div id="form-message" class="form-message"></div>
         </div>
-        
-        <div id="form-message" class="form-message"></div>
       </form>
     </div>
   </div>
 </section>
-
-<div id="successModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" id="closeModal">&times;</span>
-    <p>Message sent successfully! I will get back to you soon.</p>
-  </div>
-</div>
 
 <script>
     // Initialize WOW.js for animations
@@ -745,11 +737,16 @@
         })
         .then(response => {
             if (response.ok) {
-                document.getElementById("form-message").innerHTML = 
-                    '<div class="success-message"><i class="fas fa-check-circle"></i> Message sent successfully! I will get back to you soon.</div>';
+                // Show success message
+                const formMessage = document.getElementById("form-message");
+                formMessage.innerHTML = '<div class="success-message"><i class="fas fa-check-circle"></i> Message sent successfully! I will get back to you soon.</div>';
+                formMessage.style.display = 'block';
+                formMessage.style.color = '#4CAF50';
+                formMessage.style.padding = '10px';
+                formMessage.style.marginTop = '10px';
+                formMessage.style.borderRadius = '5px';
+                formMessage.style.backgroundColor = '#e8f5e9';
                 this.reset();
-                // Show the modal
-                document.getElementById("successModal").style.display = "block";
             } else if (response.status === 404) {
                 throw new Error('Form endpoint not found. Please check your Formspree configuration.');
             } else {
@@ -764,8 +761,14 @@
             } else {
                 errorMessage += "Please try again or contact me directly at svfernandoll@gmail.com";
             }
-            document.getElementById("form-message").innerHTML = 
-                '<div class="error-message"><i class="fas fa-exclamation-circle"></i> ' + errorMessage + '</div>';
+            const formMessage = document.getElementById("form-message");
+            formMessage.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> ' + errorMessage + '</div>';
+            formMessage.style.display = 'block';
+            formMessage.style.color = '#f44336';
+            formMessage.style.padding = '10px';
+            formMessage.style.marginTop = '10px';
+            formMessage.style.borderRadius = '5px';
+            formMessage.style.backgroundColor = '#ffebee';
         })
         .finally(() => {
             // Reset button state
@@ -791,10 +794,8 @@
     });
 </script>
 
-
 <!-- Scripts -->
 <script>
-   
     // Initialize WOW.js for animations
     new WOW().init();
     
@@ -821,32 +822,6 @@
     if (skillsSection) {
         observer.observe(skillsSection);
     }
-
-    //Contact Form
-    function sendMail(){
-      let params = {
-        name:document.getElementById("name").value,
-        email:document.getElementById("email").value,
-        subject:document.getElementById("subject").value,
-        message:document.getElementById(",essage").value,
-
-      }
-
-      emailjs.send("service_5qrxfpq","template_it8ppdc",params).then(alert("Email sent!!"))
-
-    }
-
-</script>
-
-<script>
-document.getElementById("closeModal").onclick = function() {
-  document.getElementById("successModal").style.display = "none";
-};
-window.onclick = function(event) {
-  if (event.target == document.getElementById("successModal")) {
-    document.getElementById("successModal").style.display = "none";
-  }
-};
 </script>
 </body>
 </html>
