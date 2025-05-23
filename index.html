@@ -837,6 +837,17 @@
     }
 
 </script>
+
+<script>
+document.getElementById("closeModal").onclick = function() {
+  document.getElementById("successModal").style.display = "none";
+};
+window.onclick = function(event) {
+  if (event.target == document.getElementById("successModal")) {
+    document.getElementById("successModal").style.display = "none";
+  }
+};
+</script>
 </body>
 </html>
 
