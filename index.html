@@ -728,7 +728,7 @@
         const formData = new FormData(this);
         
         // Send form data
-        fetch(this.action, {
+        fetch('https://formspree.io/f/xzzrqavw', {
             method: 'POST',
             body: formData,
             headers: {
@@ -736,6 +736,7 @@
             }
         })
         .then(response => {
+            console.log('Response status:', response.status);
             if (response.ok) {
                 // Show success message
                 const formMessage = document.getElementById("form-message");
@@ -747,22 +748,14 @@
                 formMessage.style.borderRadius = '5px';
                 formMessage.style.backgroundColor = '#e8f5e9';
                 this.reset();
-            } else if (response.status === 404) {
-                throw new Error('Form endpoint not found. Please check your Formspree configuration.');
             } else {
                 throw new Error('Network response was not ok');
             }
         })
         .catch(error => {
-            console.log("FAILED...", error);
-            let errorMessage = "Message failed to send. ";
-            if (error.message.includes('Form endpoint not found')) {
-                errorMessage = "Form configuration error. Please contact me directly at svfernandoll@gmail.com";
-            } else {
-                errorMessage += "Please try again or contact me directly at svfernandoll@gmail.com";
-            }
+            console.log("Error:", error);
             const formMessage = document.getElementById("form-message");
-            formMessage.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> ' + errorMessage + '</div>';
+            formMessage.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Message failed to send. Please try again or contact me directly at svfernandoll@gmail.com</div>';
             formMessage.style.display = 'block';
             formMessage.style.color = '#f44336';
             formMessage.style.padding = '10px';
